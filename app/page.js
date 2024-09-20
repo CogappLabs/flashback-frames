@@ -81,7 +81,7 @@ function HomeContent() {
           <span className="font-bold">The correct answer:</span>
           { revealYear && <span className="rounded border-solid border-2 border-sky-500 p-2">{ randomPhoto.year }</span> }
         </p>
-        <p className="mb-4"><span className="font-bold">Your score is:</span> {score} / 500</p>
+        <p className="mb-4"><span className="font-bold">{turnsRemaining == 0 ? 'Game over! Your final score is:' : 'Your score is:'}</span> {score} / 500</p>
         <p><span className="font-bold">Turns remaining:</span> {turnsRemaining}</p>
       </div>
     </div>
