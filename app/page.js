@@ -37,6 +37,10 @@ function HomeContent() {
   };
 
   const handleNext = async () => {
+    if (turnsRemaining === 0) {
+      return;
+    }
+    
     await getPhoto();
     setRevealYear(false);
     setShowNextButton(false); // Hide the "Next" button after fetching a new photo
@@ -86,6 +90,8 @@ function HomeContent() {
             </button>
           )}
         </form>
+        <p className="mb-4 text-xl"><span className="font-bold">{turnsRemaining == 0 ? 'Game over! Your final score is:' : 'Your score is:'}</span> {score} / 500</p>
+        <p className="mb-4"><span className="font-bold">Turns remaining:</span> {turnsRemaining}</p>
         <p className="mb-4">
           <span className="font-bold">Your answer:</span>
           { revealYear && <span className="rounded border-solid border-2 border-sky-500 p-2">{ userAnswer }</span> }
@@ -94,8 +100,6 @@ function HomeContent() {
           <span className="font-bold">The correct answer:</span>
           { revealYear && <span className="rounded border-solid border-2 border-sky-500 p-2">{ randomPhoto.year }</span> }
         </p>
-        <p className="mb-4"><span className="font-bold">{turnsRemaining == 0 ? 'Game over! Your final score is:' : 'Your score is:'}</span> {score} / 500</p>
-        <p><span className="font-bold">Turns remaining:</span> {turnsRemaining}</p>
       </div>
     </div>
   );
