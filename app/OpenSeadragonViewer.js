@@ -1,17 +1,20 @@
-'use client';
-
-import OpenSeadragon from 'openseadragon'
-import React, { useEffect, useRef } from 'react'
+import OpenSeadragon from 'openseadragon';
+import React, { useEffect, useRef } from 'react';
+import { usePhoto } from './PhotoContext';
 
 // Generate an OSD viewer for a provided artwork, and display in the relevant container
-export function OpenSeadragonViewer({itemId, idPrefix}) {
+export function OpenSeadragonViewer({idPrefix}) {
     const viewerRef = useRef(null);
+    const { getPhoto, randomPhoto } = usePhoto();
 
     useEffect(() => {
+        if (!randomPhoto) {
+            return;
+        }
         // Construct the manifest url 
-        let manifestUrl = 'https://iiif.europeana.eu/presentation' + itemId + '/manifest.json';
+        let manifestUrl = 'https://iiif.europeana.eu/presentation' + randomPhoto.id + '/manifest';
 
-        
+        console.log(manifestUrl);
 
         // Fetch the IIIF manifest
         fetch(manifestUrl)
@@ -20,6 +23,12 @@ export function OpenSeadragonViewer({itemId, idPrefix}) {
             let imageUrl;
             let tileWidth;
             let tileHeight;
+
+            if (!manifest["sequences"]) {
+                getPhoto();
+
+                return;
+            }
 
             // Extract the image URL and tile information from the manifest
             imageUrl = manifest["sequences"][0]["canvases"][0]["images"][0]["resource"]["@id"];
@@ -54,7 +63,7 @@ export function OpenSeadragonViewer({itemId, idPrefix}) {
                 viewerRef.current.open(tileSources);
             }
         });
-    }, [itemId, idPrefix]);
+    }, [idPrefix, randomPhoto, getPhoto]);
 
     return (
         <div 
