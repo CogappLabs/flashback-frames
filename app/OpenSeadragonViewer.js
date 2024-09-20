@@ -60,7 +60,7 @@ export function OpenSeadragonViewer({itemId, idPrefix}) {
         <div 
             id={idPrefix} style={{ width: "100%", height: "600px" }}
             // Tailwind classes to make the viewer 250px by 250px
-            className="!w-64 !h-64"
+            className="w-full h-full"
         ></div>
     );
 }

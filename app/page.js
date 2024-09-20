@@ -1,6 +1,6 @@
 'use client';
 // import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from 'next/dynamic';
 
 const Openseadragon = dynamic(
@@ -11,9 +11,9 @@ const Openseadragon = dynamic(
 export default function Home() {
   const apiKey = process.env.EUROPEANA_API_KEY;
   const [response, setResponse] = useState(null);
-  const [randomPerson, setRandomPerson] = useState(null);
+  const [randomPhoto, setRandomPhoto] = useState(null);
 
-  const getPerson = async () => {
+  const getPhoto = async () => {
     try {
       // Make the GET request to the API
       const res = await fetch(`/api`, {
@@ -35,12 +35,12 @@ export default function Home() {
 
       // Access a random item from the items array
       const items = data.data.items;
-      const randomPersonIndex = Math.floor(Math.random() * items.length);
-      const randomPerson = items[randomPersonIndex];
-      const randomPersonId = items[randomPersonIndex]['id'];
+      const randomPhotoIndex = Math.floor(Math.random() * items.length);
+      const randomPhoto = items[randomPhotoIndex];
+      const randomPhotoId = items[randomPhotoIndex]['id'];
 
       // Update the state with the random item
-      setRandomPerson(randomPerson);
+      setRandomPhoto(randomPhoto);
 
 
     } catch (error) {
@@ -48,45 +48,53 @@ export default function Home() {
     }
   }
 
-  // Call getPerson when the component mounts
+  // Call getPhoto when the component mounts
   useEffect(() => {
-    getPerson();
+    getPhoto();
   }, []);
 
   const HandleSubmit = async (event) => {
     event.preventDefault();
 
-    getPerson();
+    getPhoto();
 
+  };
+
+  const [year, setYear] = useState(1860);
+  const [minYearText, setMinYearText] = useState(1860);
+
+  const updateYear = (value) => {
+    setYear(value);
+
+    console.log(year);
+
+    setMinYearText(value);
   };
 
   return (
     <div>
-      <h1>Fictional Family Tree</h1>
-      <p>This is Name, they are from {randomPerson && randomPerson.country[0]}</p>
-      {/* <Image src="/unknown-person.jpg" alt="Unknown person" width={250} height={250} /> */}
-      {randomPerson && (
-        <Openseadragon itemId={randomPerson.id} idPrefix='openseadragon1' />
+      <h1>Guess the Date</h1>
+      {randomPhoto && (
+        <Openseadragon itemId={randomPhoto.id} idPrefix='openseadragon1' />
       )}
-      <h2>You decide:</h2>
+      <h2>When was this photograph taken?</h2>
       <form onSubmit={HandleSubmit}>
-        <p>Did Name live in {randomPerson && randomPerson.country[0]} their whole life or did they emigrate?</p>
-        
-        {/* Radio button field with Stayed or Emigrated */}
-        <input type="radio" id="stayed" name="stay" value="stayed" />
-        <label for="stayed">Stayed</label>
-        <input type="radio" id="emigrated" name="stay" value="emigrated" />
-        <label for="emigrated">Emigrated</label>
-
-        <p>How many children did they have?</p>
-        {/* Radio button with 1 - 3 */}
-        <input type="radio" id="one" name="children" value="one" />
-        <label for="one">1</label>
-        <input type="radio" id="two" name="children" value="two" />
-        <label for="two">2</label>
-        <input type="radio" id="three" name="children" value="three" />
-        <label for="three">3</label>
-
+        <label htmlFor="year">Year: </label>
+        <input 
+          className="block mb-4 w-full" 
+          type="range" 
+          id="year" 
+          name="year" 
+          min="1860" 
+          max="2020" 
+          step="1" 
+          list="year-markers"         
+          value={year}
+          onChange={(e) => updateYear(e.target.value)}/>
+        <div className="flex justify-between">
+          <span id="minYear">{minYearText}</span>
+          <span id="maxYear">2020</span>
+        </div>
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
       </form>
     </div>
