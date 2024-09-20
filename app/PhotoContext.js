@@ -5,7 +5,7 @@ const PhotoContext = createContext();
 export const PhotoProvider = ({ children }) => {
   const apiKey = process.env.EUROPEANA_API_KEY;
   const [response, setResponse] = useState(null);
-  const [randomPhoto, setRandomPhoto] = useState(null);
+  const [randomPhoto, setRandomPhoto] = useState({ });
 
   const getPhoto = async () => {
     try {
@@ -23,9 +23,17 @@ export const PhotoProvider = ({ children }) => {
       setResponse(data);
 
       const items = data.data.items;
+      console.log('Items', data.data);
       const randomPhotoIndex = Math.floor(Math.random() * items.length);
       const randomPhoto = items[randomPhotoIndex];
-      setRandomPhoto(randomPhoto);
+
+      if (!randomPhoto['year']) {
+        getPhoto();
+        return;
+      }
+
+      setRandomPhoto({ edmPreview: randomPhoto['edmPreview'][0], year: randomPhoto['year'][0] });
+
     } catch (error) {
       console.error("Error:", error);
     }

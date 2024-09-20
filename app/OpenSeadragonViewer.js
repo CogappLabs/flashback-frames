@@ -14,8 +14,6 @@ export function OpenSeadragonViewer({idPrefix}) {
         // Construct the manifest url 
         let manifestUrl = 'https://iiif.europeana.eu/presentation' + randomPhoto.id + '/manifest';
 
-        console.log(manifestUrl);
-
         // Fetch the IIIF manifest
         fetch(manifestUrl)
         .then(response => response.json())

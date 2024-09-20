@@ -14,9 +14,9 @@ export async function GET(request) {
 
     try {
         // Store the API response in a variable
-        let response = await fetch(`https://api.europeana.eu/record/v2/search.json?query=photo+or+portrait+of+person&type=image&qf=where:${country}&wskey=${apiKey}`);
-        // let response = await fetch(`https://api.europeana.eu/record/v2/search.json?query=photo+or+portrait+of+person&type=image&qa=proxy_dc_subject%3Aperson&wskey=${apiKey}`);
-        
+        // let response = await fetch(`https://api.europeana.eu/record/v2/search.json?query=photo+or+portrait+of+person&type=image&qf=where:${country}&wskey=${apiKey}`);
+        let response = await fetch(`https://api.europeana.eu/record/v2/search.json?query=photography&wskey=${apiKey}&has_thumbnail=true&facet=year`);
+
         // If the call failed, throw an error
         if (!response.ok) {
             throw 'Something went wrong.';

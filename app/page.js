@@ -1,22 +1,24 @@
 'use client';
-// import Image from "next/image";
+import Image from "next/image";
 import { useState } from "react";
 import dynamic from 'next/dynamic';
 import { PhotoProvider, usePhoto } from './PhotoContext';
 
-const Openseadragon = dynamic(
-  () =>
-    import('./OpenSeadragonViewer.js')
-)
-
 function HomeContent() {
-  const { randomPhoto } = usePhoto();
+  const { randomPhoto, getPhoto } = usePhoto();
+  // score state variable
+  const [score, setScore] = useState(0);
 
 
 
   const HandleSubmit = async (event) => {
     event.preventDefault();
 
+    if (event.target.year.value == randomPhoto.year) {
+      setScore(score + 100);
+    }
+
+    await getPhoto();
   };
 
   const [year, setYear] = useState(1860);
@@ -34,7 +36,10 @@ function HomeContent() {
     <div>
       <h1>Guess the Date</h1>
       { randomPhoto &&
-        <Openseadragon idPrefix='openseadragon1' />
+        <div className="w-1/2 h-1/2">
+          <Image src={randomPhoto.edmPreview} alt="Random photograph" layout="responsive" width={200} height={200} />
+          <p>{randomPhoto.year}</p>
+        </div>
       }
       <h2>When was this photograph taken?</h2>
       <form onSubmit={HandleSubmit}>
@@ -56,6 +61,7 @@ function HomeContent() {
         </div>
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
       </form>
+      {score > 0 && <p>Your score is: {score}</p>}
     </div>
   );
 }
