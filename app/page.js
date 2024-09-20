@@ -1,18 +1,12 @@
 'use client';
-import Image from "next/image";
 import { useState } from "react";
-import dynamic from 'next/dynamic';
 import { PhotoProvider, usePhoto } from './PhotoContext';
 
 function HomeContent() {
   const { randomPhoto, getPhoto, revealYear, setRevealYear } = usePhoto();
-  // score state variable
   const [score, setScore] = useState(0);
   const [turnsRemaining, setTurnsRemaining] = useState(5);
   const [userAnswer, setUserAnswer] = useState(0);
-
-
-
 
   const HandleSubmit = async (event) => {
     event.preventDefault();
@@ -47,9 +41,6 @@ function HomeContent() {
 
   const updateYear = (value) => {
     setYear(value);
-
-    console.log(year);
-
     setMinYearText(value);
   };
 
@@ -58,7 +49,7 @@ function HomeContent() {
       <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Guess the Date</h1>
       { randomPhoto &&
         <div className="w-1/2 h-96 flex mb-8">
-          <Image className="object-contain" src={randomPhoto.edmPreview} alt="Random photograph" layout="responsive" width={200} height={200} />
+          <img className="object-contain w-full" src={randomPhoto.edmPreview} alt="Random photograph" layout="responsive" />
         </div>
       }
       <div className="w-1/2">
