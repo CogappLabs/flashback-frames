@@ -36,8 +36,8 @@ function HomeContent() {
     await getPhoto();
   };
 
-  const [year, setYear] = useState(1860);
-  const [minYearText, setMinYearText] = useState(1860);
+  const [year, setYear] = useState(1880);
+  const [minYearText, setMinYearText] = useState(1880);
 
   const updateYear = (value) => {
     setYear(value);
@@ -61,7 +61,7 @@ function HomeContent() {
             type="range" 
             id="year" 
             name="year" 
-            min="1860" 
+            min="1880" 
             max="2020" 
             step="1" 
             list="year-markers"         
