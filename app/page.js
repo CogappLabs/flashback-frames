@@ -7,6 +7,7 @@ function HomeContent() {
   const [score, setScore] = useState(0);
   const [turnsRemaining, setTurnsRemaining] = useState(5);
   const [userAnswer, setUserAnswer] = useState(0);
+  const [showNextButton, setShowNextButton] = useState(false);
 
   const HandleSubmit = async (event) => {
     event.preventDefault();
@@ -28,12 +29,17 @@ function HomeContent() {
 
     setRevealYear(true);
     setUserAnswer(event.target.year.value);
+    setShowNextButton(true);
 
     if (turnsRemaining <= 1) {
       return;
     }
+  };
 
+  const handleNext = async () => {
     await getPhoto();
+    setRevealYear(false);
+    setShowNextButton(false); // Hide the "Next" button after fetching a new photo
   };
 
   const [year, setYear] = useState(1880);
@@ -71,7 +77,14 @@ function HomeContent() {
             <span id="minYear">{minYearText}</span>
             <span id="maxYear">2020</span>
           </div>
-          <button className={ turnsRemaining === 0 ? "bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>Submit</button>
+          {!showNextButton && (
+            <button className={ turnsRemaining === 0 ? "bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>Submit</button>
+          )}
+          {showNextButton && (
+            <button onClick={handleNext} className={ turnsRemaining === 0 ? "bg-green-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" : "mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"}>
+              Next
+            </button>
+          )}
         </form>
         <p className="mb-4">
           <span className="font-bold">Your answer:</span>
