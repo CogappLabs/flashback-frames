@@ -9,40 +9,6 @@ export const PhotoProvider = ({ children }) => {
   const [revealYear, setRevealYear] = useState(false);
   const [photosPlayed, setPhotosPlayed] = useState([]);
 
-  // const getPhoto = async () => {
-  //   try {
-  //     const res = await fetch(`/api`, {
-  //       headers: {
-  //         "Authorization": `Bearer ${apiKey}`,
-  //       },
-  //     });
-
-  //     if (!res.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-
-  //     const data = await res.json();
-  //     setResponse(data);
-
-  //     const items = data.data.items;
-  //     console.log('Items', data.data.items);
-  //     const randomPhotoIndex = Math.floor(Math.random() * items.length);
-  //     console.log('Random Photo Index', randomPhotoIndex);
-  //     const randomPhoto = items[randomPhotoIndex];
-
-  //     if (!randomPhoto['year']) {
-  //       getPhoto();
-  //       return;
-  //     }
-
-  //     setRevealYear(false);
-  //     setRandomPhoto({ edmPreview: randomPhoto['edmPreview'][0], year: randomPhoto['year'][0] });
-
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
-
   const getPhoto = async () => {
     try {
       const photographs = [

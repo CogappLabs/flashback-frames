@@ -56,7 +56,7 @@ function HomeContent() {
 
   return (
     <div className="container flex flex-col items-center p-8">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Guess the Date</h1>
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-3xl dark:text-white">Flashback Frames: Guess the Year</h1>
       { randomPhoto &&
         <div className="w-1/2 h-96 flex mb-8">
           <img className="object-contain w-full" src={randomPhoto.edmPreview} alt="Random photograph" layout="responsive" />
