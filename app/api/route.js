@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 // To handle a GET request to /api
 export async function GET(request) {
-    const apiKey = process.env.EUROPEANA_API_KEY;
+    // const apiKey = process.env.EUROPEANA_API_KEY;
 
     try {
         // Store the API response in a variable
